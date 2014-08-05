@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>HTTP Request Blocker</title>
+    <script src="lib/jquery.min.js"></script>
+    <link href="lib/bootstrap/bootstrap.min.css" rel="stylesheet">
+    <script src="lib/bootstrap/bootstrap.min.js"></script>
+    <script src="lib/angular.min.js"></script>
+    <script src="popup.js"></script>
+  </head>
+  <body ng-app="RequestBlockerApp">
+    <div class="container" ng-controller="PopupController" ng-init="init()" style="width: 500px;">
+      <h1>HTTP Request Blocker</h1>
+
+
+      <h3>{{patterns.length}} Pattern(s) (<a href="javascript:void(0)" ng-click="add()">add new</a>): </h3>
+      {{message}}
+      <table class="table table-hover">
+        <tr ng-repeat="u in patterns">
+          <td>
+            <input type="text" class="form-control" ng-model="u.pattern" />
+          </td>
+          <td style="width: 20px;">
+            <button class="btn btn-default" ng-click="remove(u)">
+              <i class="glyphicon glyphicon-remove" style="color: #A94442;"></i>
+            </button>
+          </td>
+        </tr>
+      </table>
+
+      <p class="bg-warning text-warning">Url patterns must comply with the format specified at <a href="https://developer.chrome.com/extensions/match_patterns">https://developer.chrome.com/extensions/match_patterns</a> (ex: <strong>*://evilsite.com/*</strong>).</p>
+
+      <hr />
+
+      <div>
+        <button class="btn btn-primary" ng-click="save()">Save</button>
+      </div>
+      <br />
+
+      <div id="modal" class="modal fade">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+              <h4 class="modal-title">{{modalTitle}}</h4>
+            </div>
+            <div class="modal-body">
+              <p ng-class="modalClass">{{modalMessage}}</p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">OK</button>
+            </div>
+          </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+      </div><!-- /.modal -->
+    </div>
+  </body>
+</html>

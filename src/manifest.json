@@ -1,0 +1,22 @@
+{
+    "name": "HTTP Request Blocker",
+    "version": "1.0",
+    "description": "This extension blocks HTTP Request based on configurable URL patterns.",
+    "permissions": [
+        "webRequest",
+        "webRequestBlocking",
+        "http://*/*",
+        "https://*/*",
+        "storage"
+    ],
+    "background": {
+        "persistent": true,
+        "scripts": ["blocker.js"]
+    },
+    "browser_action": {
+        "default_title": "HTTP Request Blocker",
+        "default_icon": "images/icon19.png",
+        "default_popup": "popup.html"
+    },
+    "manifest_version": 2
+}
