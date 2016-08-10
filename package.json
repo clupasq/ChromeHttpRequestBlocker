@@ -1,0 +1,30 @@
+{
+  "name": "chrome-http-request-blocker",
+  "version": "2.0.0",
+  "description": "Chrome extension that blocks requests based on user defined patterns.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wolfascu/ChromeHttpRequestBlocker.git"
+  },
+  "author": "Cristian Lupascu",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/wolfascu/ChromeHttpRequestBlocker/issues"
+  },
+  "homepage": "https://github.com/wolfascu/ChromeHttpRequestBlocker#readme",
+  "devDependencies": {
+    "browserify": "^13.1.0",
+    "gulp": "^3.9.1",
+    "gulp-eslint": "^3.0.1",
+    "gulp-sourcemaps": "^1.6.0",
+    "gulp-uglify": "^2.0.0",
+    "gulp-util": "^3.0.7",
+    "gulp-watch": "^4.3.9",
+    "vinyl-buffer": "^1.0.0",
+    "vinyl-source-stream": "^1.1.0"
+  }
+}
