@@ -1,32 +1,54 @@
+/*global require*/
 'use strict';
 
-const browserify = require('browserify');
-const gulp = require('gulp');
-const source = require('vinyl-source-stream');
-const buffer = require('vinyl-buffer');
-const gutil = require('gulp-util');
-const uglify = require('gulp-uglify');
-const sourcemaps = require('gulp-sourcemaps');
-const eslint = require('gulp-eslint');
-const watch = require('gulp-watch');
+var browserify = require('browserify');
+var gulp = require('gulp');
+var source = require('vinyl-source-stream');
+var buffer = require('vinyl-buffer');
+var gutil = require('gulp-util');
+var uglify = require('gulp-uglify');
+var sourcemaps = require('gulp-sourcemaps');
+var eslint = require('gulp-eslint');
 
-gulp.task('default', ['bundle']);
+var jsSources = ['./src/**/*.js','gulpfile.js'];
+
+gulp.task('js', ['lint', 'uglify']);
+
+gulp.task('lint', function() {
+  return gulp.src(jsSources)
+    .pipe(eslint())
+    .pipe(eslint.format())
+    //.pipe(eslint.failAfterError())
+    ;
+});
 
 gulp.task('bundle', function () {
+  // set up the browserify instance on a task basis
   var b = browserify({
     entries: './src/background.js',
     debug: true,
+    // defining transforms here will avoid crashing your stream
     transform: [/*reactify*/]
   });
 
   return b.bundle()
-    .pipe(source('app.js'))
+    .pipe(source('src/index.js'))
     .pipe(buffer())
-    .pipe(sourcemaps.init({loadMaps: true}))
-        // Add transformation tasks to the pipeline here.
-        //.pipe(uglify())
+    .pipe(eslint())
         .on('error', gutil.log)
-    //.pipe(sourcemaps.write('./'))
-    .pipe(gulp.dest('./dist/js/'));
+    .pipe(gulp.dest('./dist/'));
+});
+
+gulp.task('uglify', ['bundle'], function() {
+  gulp.src('dist/mobile.videoChannel.js')
+    .pipe(rename('mobile.videoChannel.min.js'))
+    .pipe(sourcemaps.init({loadMaps: true}))
+         //Add transformation tasks to the pipeline here.
+        .pipe(uglify())
+    .pipe(gulp.dest('./dist/mobile.videoChannel.min.js'));
+});
+
+gulp.task('watch', ['js'], function() {
+  return gulp.watch(jsSources, ['js']);
 });
 
