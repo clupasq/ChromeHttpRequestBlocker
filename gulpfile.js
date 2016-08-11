@@ -10,12 +10,12 @@ const sourcemaps = require('gulp-sourcemaps');
 const eslint = require('gulp-eslint');
 const watch = require('gulp-watch');
 
-gulp.task('javascript', function () {
-  // set up the browserify instance on a task basis
+gulp.task('default', ['bundle']);
+
+gulp.task('bundle', function () {
   var b = browserify({
-    entries: './src/blocker.js',
+    entries: './src/background.js',
     debug: true,
-    // defining transforms here will avoid crashing your stream
     transform: [/*reactify*/]
   });
 
