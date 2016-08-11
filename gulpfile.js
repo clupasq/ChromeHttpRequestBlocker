@@ -6,15 +6,18 @@ var gulp = require('gulp');
 var source = require('vinyl-source-stream');
 var buffer = require('vinyl-buffer');
 var gutil = require('gulp-util');
-var uglify = require('gulp-uglify');
-var sourcemaps = require('gulp-sourcemaps');
+//var uglify = require('gulp-uglify');
+//var sourcemaps = require('gulp-sourcemaps');
 var eslint = require('gulp-eslint');
+var clearScreen = require('clear');
 
 var jsSources = ['./src/**/*.js','gulpfile.js'];
 
-gulp.task('js', ['lint', 'uglify']);
+gulp.task('js', ['lint', 'bundle']);
 
-gulp.task('lint', function() {
+gulp.task('clearScreen', function() { clearScreen(); });
+
+gulp.task('lint', ['clearScreen'], function() {
   return gulp.src(jsSources)
     .pipe(eslint())
     .pipe(eslint.format())
@@ -37,15 +40,6 @@ gulp.task('bundle', function () {
     .pipe(eslint())
         .on('error', gutil.log)
     .pipe(gulp.dest('./dist/'));
-});
-
-gulp.task('uglify', ['bundle'], function() {
-  gulp.src('dist/mobile.videoChannel.js')
-    .pipe(rename('mobile.videoChannel.min.js'))
-    .pipe(sourcemaps.init({loadMaps: true}))
-         //Add transformation tasks to the pipeline here.
-        .pipe(uglify())
-    .pipe(gulp.dest('./dist/mobile.videoChannel.min.js'));
 });
 
 gulp.task('watch', ['js'], function() {

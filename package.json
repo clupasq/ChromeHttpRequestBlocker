@@ -18,6 +18,7 @@
   "homepage": "https://github.com/wolfascu/ChromeHttpRequestBlocker#readme",
   "devDependencies": {
     "browserify": "^13.1.0",
+    "clear": "0.0.1",
     "gulp": "^3.9.1",
     "gulp-eslint": "^3.0.1",
     "gulp-sourcemaps": "^1.6.0",
