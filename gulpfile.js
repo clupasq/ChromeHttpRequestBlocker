@@ -12,6 +12,7 @@ var eslint = require('gulp-eslint');
 var clearScreen = require('clear');
 
 var jsSources = ['./src/**/*.js','gulpfile.js'];
+var destinationDir = './dist/';
 
 gulp.task('js', ['lint', 'bundle']);
 
@@ -25,21 +26,52 @@ gulp.task('lint', ['clearScreen'], function() {
     ;
 });
 
-gulp.task('bundle', function () {
+var bundleJs = function(jsEntryPoint) {
   // set up the browserify instance on a task basis
   var b = browserify({
-    entries: './src/background.js',
+    entries: jsEntryPoint,
     debug: true,
     // defining transforms here will avoid crashing your stream
     transform: [/*reactify*/]
   });
 
   return b.bundle()
-    .pipe(source('src/index.js'))
+    .pipe(source(jsEntryPoint))
     .pipe(buffer())
     .pipe(eslint())
         .on('error', gutil.log)
-    .pipe(gulp.dest('./dist/'));
+    .pipe(gulp.dest(destinationDir));
+};
+
+gulp.task('bundleOptionsPageJs', function () {
+  return bundleJs('./src/options.js');
+});
+
+gulp.task('bundleBackgroundPageJs', function () {
+  return bundleJs('./src/background.js');
+});
+
+gulp.task('bundleHtml', function () {
+  return gulp.src('./src/options.html', { base: './src'})
+    .pipe(gulp.dest(destinationDir));
+});
+
+gulp.task('bundleAssets', function () {
+  return gulp.src([
+    './src/images/*',
+    './src/lib/*',
+  ], { base: './src'})
+  .pipe(gulp.dest(destinationDir));
+});
+
+gulp.task('bundle', [
+  'bundleOptionsPageJs',
+  'bundleBackgroundPageJs',
+  'bundleHtml',
+  'bundleAssets'
+], function () {
+  return gulp.src('./src/manifest.json')
+    .pipe(gulp.dest(destinationDir));
 });
 
 gulp.task('watch', ['js'], function() {

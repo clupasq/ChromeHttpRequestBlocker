@@ -21,10 +21,10 @@
     },
     "background": {
         "persistent": true,
-        "scripts": ["background.js"]
+        "scripts": ["src/background.js"]
     },
     "options_ui": {
-      "page" : "popup.html",
+      "page" : "options.html",
       "chrome_style": true
     }
 }
