@@ -5,7 +5,7 @@
     "version": "1.0",
     "description": "This extension blocks HTTP Request based on configurable URL patterns.",
     "author": "Cristian Lupașcu",
-    "homepage_url": "https://github.com/clupascu/ChromeHttpRequestBlocker",
+    "homepage_url": "https://github.com/clupasq/ChromeHttpRequestBlocker",
 
     "permissions": [
         "webRequest",
