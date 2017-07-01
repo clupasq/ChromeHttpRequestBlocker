@@ -7,6 +7,11 @@
     <script src="lib/bootstrap/bootstrap.min.js"></script>
     <script src="lib/angular.min.js"></script>
     <script src="popup.js"></script>
+    <style type="text/css" media="screen">
+wrong {
+  color: red;
+}
+    </style>
   </head>
   <body ng-app="RequestBlockerApp">
     <div class="container" ng-controller="PopupController" ng-init="init()" style="width: 500px;">
@@ -18,7 +23,7 @@
       <table class="table table-hover">
         <tr ng-repeat="u in patterns">
           <td>
-            <input type="text" class="form-control" ng-model="u.pattern" />
+            <input type="text" class="form-control" ng-class="wrong: !u.valid" ng-model="u.pattern" /> {{u.valid}}
           </td>
           <td style="width: 20px;">
             <button class="btn btn-default" ng-click="remove(u)">

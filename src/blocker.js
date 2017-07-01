@@ -5,25 +5,25 @@ function blockRequest(details) {
   };
 }
 
+function isValidPattern(urlPattern) {
+  var validPattern = /^(file:\/\/.+)|(https?|ftp|\*):\/\/(\*|\*\.([^\/*]+)|([^\/*]+))\//g;
+  return !!urlPattern.match(validPattern);
+}
+
 function updateFilters(urls) {
-  console.info('Updating...');
-
-  if (chrome.webRequest.onBeforeRequest.hasListener(blockRequest))
+  if (chrome.webRequest.onBeforeRequest.hasListener(blockRequest)) {
     chrome.webRequest.onBeforeRequest.removeListener(blockRequest);
-
-  if (patterns.length) {
-    chrome.webRequest.onBeforeRequest.addListener(blockRequest, {
-      urls: patterns
-    }, ['blocking']);
-    console.info('Using patterns:');
-    for (p in patterns) {
-      console.info(patterns[p]);
-    }
-  } else {
-    console.info('No patterns defined yet.');
   }
 
-  console.info('Updated!')
+  if (patterns.length) {
+    try{
+      chrome.webRequest.onBeforeRequest.addListener(blockRequest, {
+        urls: patterns
+      }, ['blocking']);
+    } catch (e) {
+      console.error(e);
+    }
+  }
 }
 
 function load(callback) {
@@ -46,3 +46,6 @@ load(function(p) {
   patterns = p;
   updateFilters();
 });
+
+
+

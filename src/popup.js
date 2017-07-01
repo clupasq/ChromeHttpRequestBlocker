@@ -2,11 +2,17 @@ var app = angular.module('RequestBlockerApp', []);
 
 app.controller('PopupController', function($scope) {
 
+    $scope.isValidPattern = function(urlPattern) {
+      var validPattern = /^(file:\/\/.+)|(https?|ftp|\*):\/\/(\*|\*\.([^\/*]+)|([^\/*]+))\//g;
+      return !!urlPattern.match(validPattern);
+    }
+
     $scope.backgroundPage = chrome.extension.getBackgroundPage();
     $scope.patterns = $scope.backgroundPage.patterns.map(function(x, i) {
         return {
             index: i,
-            pattern: x
+            pattern: x,
+            valid: $scope.isValidPattern(x)
         };
     });
 
@@ -48,6 +54,4 @@ app.controller('PopupController', function($scope) {
         $scope.modalMessage = message;
         $('#modal').modal();
     }
-
-    //todo: validate with (\*|http|https|file|ftp):\/\/((\*\.)?[^\/*]+)\/.+
 });
