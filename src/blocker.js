@@ -15,10 +15,12 @@ function updateFilters(urls) {
     chrome.webRequest.onBeforeRequest.removeListener(blockRequest);
   }
 
+  var validPatterns = patterns.filter(isValidPattern);
+
   if (patterns.length) {
     try{
       chrome.webRequest.onBeforeRequest.addListener(blockRequest, {
-        urls: patterns
+        urls: validPatterns
       }, ['blocking']);
     } catch (e) {
       console.error(e);
