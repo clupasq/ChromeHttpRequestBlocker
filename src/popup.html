@@ -18,11 +18,11 @@
       <table class="table table-hover">
         <tr ng-repeat="u in patterns">
           <td>
-            <div class="form-group has-feedback" ng-class="{'has-error': !u.isValid()}">
+            <div class="form-group has-feedback" ng-class="{'has-error': !isValidPattern(u.pattern)}">
               <input type="text" class="form-control" ng-model="u.pattern" />
 
-              <span class="glyphicon form-control-feedback" ng-class="{'glyphicon-warning-sign': !u.isValid()}" aria-hidden="true"></span>
-            </div>
+              <span class="glyphicon form-control-feedback" ng-class="{'glyphicon-warning-sign': !isValidPattern(u.pattern)}" aria-hidden="true"></span>
+            </div!>
           </td>
           <td style="width: 20px;">
             <button class="btn btn-default" ng-click="remove(u)">
