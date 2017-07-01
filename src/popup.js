@@ -12,7 +12,9 @@ app.controller('PopupController', function($scope) {
         return {
             index: i,
             pattern: x,
-            valid: $scope.isValidPattern(x)
+            isValid: function() {
+              return $scope.isValidPattern(this.pattern);
+            }
         };
     });
 

@@ -7,11 +7,6 @@
     <script src="lib/bootstrap/bootstrap.min.js"></script>
     <script src="lib/angular.min.js"></script>
     <script src="popup.js"></script>
-    <style type="text/css" media="screen">
-wrong {
-  color: red;
-}
-    </style>
   </head>
   <body ng-app="RequestBlockerApp">
     <div class="container" ng-controller="PopupController" ng-init="init()" style="width: 500px;">
@@ -23,7 +18,11 @@ wrong {
       <table class="table table-hover">
         <tr ng-repeat="u in patterns">
           <td>
-            <input type="text" class="form-control" ng-class="wrong: !u.valid" ng-model="u.pattern" /> {{u.valid}}
+            <div class="form-group has-feedback" ng-class="{'has-error': !u.isValid()}">
+              <input type="text" class="form-control" ng-model="u.pattern" />
+
+              <span class="glyphicon form-control-feedback" ng-class="{'glyphicon-warning-sign': !u.isValid()}" aria-hidden="true"></span>
+            </div>
           </td>
           <td style="width: 20px;">
             <button class="btn btn-default" ng-click="remove(u)">
@@ -33,7 +32,8 @@ wrong {
         </tr>
       </table>
 
-      <p class="bg-warning text-warning">Url patterns must comply with the format specified at <a href="https://developer.chrome.com/extensions/match_patterns">https://developer.chrome.com/extensions/match_patterns</a> (ex: <strong>*://evilsite.com/*</strong>).</p>
+      <p class="bg-warning text-warning">Url patterns must comply with the format specified at <a href="https://developer.chrome.com/extensions/match_patterns">https://developer.chrome.com/extensions/match_patterns</a> (ex: <strong>*://evilsite.com/*</strong>).
+      Invalid patterns will be ignored.</p>
 
       <hr />
 
