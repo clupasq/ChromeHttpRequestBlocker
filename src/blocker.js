@@ -19,7 +19,7 @@ function updateFilters() {
 
   var validPatterns = currentPatterns.filter(isValidPattern);
 
-  if (patterns.length) {
+  if (validPatterns.length) {
     try{
       chrome.webRequest.onBeforeRequest.addListener(blockRequest, {
         urls: validPatterns
