@@ -1,3 +1,5 @@
+var currentPatterns = [];
+
 function blockRequest(details) {
   console.log("Blocked: ", details.url);
   return {
@@ -10,12 +12,12 @@ function isValidPattern(urlPattern) {
   return !!urlPattern.match(validPattern);
 }
 
-function updateFilters(urls) {
+function updateFilters() {
   if (chrome.webRequest.onBeforeRequest.hasListener(blockRequest)) {
     chrome.webRequest.onBeforeRequest.removeListener(blockRequest);
   }
 
-  var validPatterns = patterns.filter(isValidPattern);
+  var validPatterns = currentPatterns.filter(isValidPattern);
 
   if (patterns.length) {
     try{
@@ -35,7 +37,7 @@ function load(callback) {
 }
 
 function save(newPatterns, callback) {
-  patterns = newPatterns;
+  currentPatterns = newPatterns;
   chrome.storage.sync.set({
     'blocked_patterns': newPatterns
   }, function() {
@@ -44,8 +46,8 @@ function save(newPatterns, callback) {
   });
 }
 
-load(function(p) {
-  patterns = p;
+load(function(patterns) {
+  currentPatterns = patterns;
   updateFilters();
 });
 
