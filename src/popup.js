@@ -17,6 +17,7 @@ app.controller('PopupController', function($scope) {
             }
         };
     });
+    $scope.probability = $scope.backgroundPage.probability;
 
     $scope.remove = function(patternToRemove) {
         var index = $scope.patterns.indexOf(patternToRemove);
@@ -37,9 +38,11 @@ app.controller('PopupController', function($scope) {
             return x.pattern;
         });
 
-        $scope.backgroundPage.save(patterns, function() {
+        var probability = $scope.probability;
+
+        $scope.backgroundPage.save(patterns, probability, function() {
             $scope.$apply(function() {
-                $scope.success('Patterns saved successfully!');
+                $scope.success('Patterns saved successfully!!');
             });
         });
     };
