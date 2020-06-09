@@ -1,4 +1,13 @@
+function sleep (miliseconds) {
+  var start = new Date().getTime();
+  while (new Date() < start + miliseconds) {}
+}
+
 function blockRequest(details) {
+  if (delay > 0) {
+    sleep(delay);
+  }
+
   if (probability > Math.random()) {
     console.log("Blocked: ", details.url);
     return {
@@ -35,27 +44,30 @@ function updateFilters(urls) {
 }
 
 function load(callback) {
-  chrome.storage.sync.get(['blocked_patterns', 'probability'], function(data) {
-    callback(data['blocked_patterns'] || [], data['probability'] || 1);
+  chrome.storage.sync.get(['blocked_patterns', 'probability', 'delay'], function(data) {
+    callback(data['blocked_patterns'] || [], data['probability'] || 0, data['delay'] || 0);
   });
 }
 
-function save(newPatterns, newProbability, callback) {
+function save(newPatterns, newProbability, newDelay, callback) {
   patterns = newPatterns;
   probability = newProbability;
+  delay = newDelay;
 
   chrome.storage.sync.set({
     'blocked_patterns': newPatterns,
-    'probability': probability
+    'probability': probability,
+    'delay': delay,
   }, function() {
     updateFilters();
     callback.call();
   });
 }
 
-load(function(pat, prob) {
+load(function(pat, prob, del) {
   patterns = pat;
   probability = prob;
+  delay = del;
   updateFilters();
 });
 

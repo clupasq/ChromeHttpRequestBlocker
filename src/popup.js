@@ -18,6 +18,7 @@ app.controller('PopupController', function($scope) {
         };
     });
     $scope.probability = $scope.backgroundPage.probability;
+    $scope.delay = $scope.backgroundPage.delay;
 
     $scope.remove = function(patternToRemove) {
         var index = $scope.patterns.indexOf(patternToRemove);
@@ -39,8 +40,9 @@ app.controller('PopupController', function($scope) {
         });
 
         var probability = $scope.probability;
+        var delay = $scope.delay;
 
-        $scope.backgroundPage.save(patterns, probability, function() {
+        $scope.backgroundPage.save(patterns, probability, delay, function() {
             $scope.$apply(function() {
                 $scope.success('Patterns saved successfully!!');
             });
