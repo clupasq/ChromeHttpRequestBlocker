@@ -25,7 +25,7 @@
     },
     "browser_action": {
         "default_title": "HTTP Request Blocker",
-        "default_icon": "images/icon19.png",
+        "default_icon": "images/icon16.png",
         "default_popup": "popup.html"
     }
 }
