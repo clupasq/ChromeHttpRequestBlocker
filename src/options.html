@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>HTTP Request Blocker</title>
+        <style>
+            .error {
+                background-color: #FFBABA;
+                color: #D8000C;
+            }
+
+            .info {
+                color: #4F8A10;
+                background-color: #DFF2BF;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>HTTP Request Blocker</h1>
+        <br />
+        <div>
+            Url patterns must comply with the format specified <a href="https://developer.chrome.com/extensions/match_patterns">here</a> (ex: *://evilsite.com/*).
+        </div>
+        <br />
+        <textarea id="urlPatterns" rows="20" cols="75"></textarea>
+        <br />
+        <button id="save">Save</button>
+        <span id="error" class="error"></span>
+        <span id="info" class="info"></span>
+
+        <script src="options.js"></script>
+    </body>
+</html>
